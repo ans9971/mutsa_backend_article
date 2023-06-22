@@ -4,6 +4,7 @@ import com.example.article.dto.ArticleDto;
 import jakarta.persistence.GeneratedValue;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.management.DescriptorKey;
@@ -46,5 +47,19 @@ public class ArticleController {
     @DeleteMapping("/articles/{id}")
     public void delete(@PathVariable("id") Long id) {
         service.deleteArticle(id);
+    }
+
+    @GetMapping("/page-test")
+    public Page<ArticleDto> readPageTest() {
+        return service.readArticlePaged();
+    }
+
+    @GetMapping
+    public Page<ArticleDto> readAll(
+            @RequestParam("page") Integer page,
+            @RequestParam("limit") Integer limit
+
+    ) {
+        return service.readArticlePaged();
     }
 }
